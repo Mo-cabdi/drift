@@ -18,53 +18,50 @@ Målet med denne dokumentasjonen er å gi en oversikt over de nødvendige kompon
 
 For å sette opp og konfigurere en DHCP-server i et Windows Server-miljø ved hjelp av PowerShell, må du:
 
-* **Ha DHCP-serverrollen installert:** Dette kan gjøres ved hjelp av følgende PowerShell-kommando. Du kan bekrefte installasjonen med `Get-WindowsFeature DHCP`[cite: 4].
+* **Ha DHCP-serverrollen installert:** Dette kan gjøres ved hjelp av følgende PowerShell-kommando. Du kan bekrefte installasjonen med `Get-WindowsFeature DHCP`.
     ```powershell
     Install-WindowsFeature -Name DHCP -IncludeAllSubFeature -includeManagementTools
-    ``` [cite: 3]
+    ``` 
 * **Opprette og konfigurere et nytt scope:** Definer et område med IP-adresser som DHCP-serveren vil leie ut til klienter. Dette innebærer å spesifisere et navn, start- og slutt-IP-adresser, nettverksmaske, og sette scopet til aktivt.
     ```powershell
     Add-DhcpServerV4Scope -Name "scope navn" -StartRange din start ip adresse -EndRange din slutt ip-adresse -SubnetMask 255.255.255.0 -State Active
-    ``` [cite: 5]
+    ``` 
 * **Konfigurere standard gateway og DNS-serveralternativer:** Sett standard gateway og DNS-serveradresser som klienter vil motta fra DHCP-serveren.
     ```powershell
-    Set-DhcpServerV4OptionValue -ScopeId 192.168.1.0 -OptionId 3 -Value 192.168.1.1
-    ``` [cite: 6]
-    ```powershell
-    Set-DhcpServerV4OptionValue -ScopeId 192.168.1.0 -OptionId 6 -Value 192.168.99.10,192.168.1.11
-    ``` [cite: 6]
+    Set-DhcpServerV4OptionValue -ScopeId 192.168.9.1 -OptionId 3 -Value 192.168.9.7
+    ```
+
 * **Aktivere og starte DHCP-tjenesten:** Sørg for at tjenesten er satt til å starte automatisk og kjører.
     ```powershell
     Set-Service -Name DHCPServer -StartupType Automatic
     Restart-Service -Name DHCPServer
-    ``` [cite: 6]
+    ``` 
 * **Definere IP-adresseeksklusjonsområder (valgfritt, men anbefalt):** Spesifiser et område med IP-adresser innenfor scopet som ikke skal tildeles av DHCP-serveren, vanligvis for statiske tildelinger.
     ```powershell
-    Add-DhcpServerV4ExclusionRange -ScopeId 192.168.1.0 -StartRange 192.168.1.1 -EndRange 192.168.1.30
-    ``` [cite: 7]
+    Add-DhcpServerV4ExclusionRange -ScopeId 192.168.9.1 -StartRange 192.168.9.1 -EndRange 192.168.9.50
+    ``` 
 
 ## Active Directory Domain Services (AD DS)
 
 For å sette opp og konfigurere en domenekontroller med AD DS ved hjelp av PowerShell, må du:
 
-* **Ha AD-Domain-Services-rollen installert:** Installer den nødvendige rollen ved hjelp av følgende PowerShell-kommando. Bekreft installasjonen med `Get-WindowsFeature AD-Domain-Services`[cite: 10].
+* **Ha AD-Domain-Services-rollen installert:** Installer den nødvendige rollen ved hjelp av følgende PowerShell-kommando. Bekreft installasjonen med `Get-WindowsFeature AD-Domain-Services`.
     ```powershell
     Install-WindowsFeature -Name AD-Domain-Services -IncludeAllSubFeature -includeManagementTools
-    ``` [cite: 9]
+    ``` 
 * **Opprette en ny forest og installere DNS:** Promover serveren til en domenekontroller og opprett en ny AD forest, som inkluderer installasjon av DNS-serverrollen. Dette gjøres ved hjelp av `Install-ADDSForest` cmdlet, der du angir domenenavn, NetBIOS-navn og et sikkert passord for administrator i sikkermodus. Serveren vil starte på nytt for å fullføre prosessen.
     ```powershell
-    $domain_navn = "Eyo.com"
-    $netbiosnavn = "EYO"
+    $domain_navn = "hmehq.dm"
+    $netbiosnavn = "hmemq"
     $passord = Read-Host "skriv inn passord" -AsSecureString
     Install-ADDSForest -DomainName $domain_navn -DomainNetbiosName $netbiosnavn -SafeModeAdministratorPassword $passord -InstallDns -Force
-    ``` [cite: 12]
+    ``` 
 
 ## VLAN-konfigurasjon
 
 Konfigurering av VLAN på en Windows Server innebærer vanligvis følgende for å ha det på plass:
 
 * **Støtte for nettverkskort og svitsj:** Sørg for at nettverkskortet (NIC) og nettverkssvitsjen støtter IEEE 802.1q for VLAN-merking.
-* **NIC Teaming (valgfritt, men anbefalt):** Grupper flere nettverkskort for redundans og lastbalansering før du konfigurerer VLAN på team-grensesnittet. Dette konfigureres i Server Manager under NIC Teaming.
 * **VLAN ID-konfigurasjon:** Konfigurer den spesifikke VLAN ID-en på nettverkskortet eller NIC-team-grensesnittet. Dette kan ofte gjøres via nettverkskortets avanserte egenskaper i Enhetsbehandling eller innenfor NIC Teaming-konfigurasjonsgrensesnittet i Server Manager.
 * **IP-adresse tildeling:** Tilordne en IP-adresse og nettverksmaske til VLAN-grensesnittet som samsvarer med VLAN-nettverket.
 * **Svitsjkonfigurasjon:** Nettverkssvitsjportene som er koblet til serveren må konfigureres for å tillate de spesifiserte VLAN-ene.
