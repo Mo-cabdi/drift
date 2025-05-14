@@ -1,0 +1,114 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fc;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Header section */
+.faq-header {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: #fff;
+    border-bottom: 5px solid #007bff;
+
+}
+
+.faq-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.faq-header .highlight {
+    color: #ffcc00;
+}
+
+.faq-header p {
+    font-size: 1rem;
+}
+
+/* FAQ container */
+/* FAQ container with grid layout */
+.faq-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Creates a responsive grid with 3 columns max */
+    gap: 20px; /* Adds gap between rows and columns */
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    max-width: 1200px; /* Optional, controls the maximum container width */
+    margin: 0 auto; /* Centers the grid container */
+}
+
+/* FAQ item styling */
+.faq-item {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for FAQ items */
+.faq-item:hover {
+    transform: scale(1.03); /* Slight zoom effect */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}
+
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.faq-question:hover {
+    color: #007bff;
+}
+
+.toggle-answer {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #333;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.toggle-answer.open {
+    transform: rotate(180deg);
+}
+
+/* Answer section with animations */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #555;
+    font-size: 1.2rem;
+}
+
+.faq-answer.visible {
+    max-height: 500px; /* Adjust based on content */
+    opacity: 1;
+}
+
+
+#arrow {
+    font-size: 2rem;
+}
