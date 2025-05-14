@@ -1,0 +1,6 @@
+FirstName,LastName,UserName,Password,OU
+Ola,Nordmann,onordmann,IMKuben1337!,"OU=IM2,DC=drift,DC=hem"
+Kari,Hansen,khansen,IMKuben1337!,"OU=IM2,DC=drift,DC=hem"
+Per,Andersen,pandersen,IMKuben1337!,"OU=IM2,DC=drift,DC=hem"
+Anne,Berg,aberg,IMKuben1337!,"OU=IM2,DC=drift,DC=hem"
+Jens,Lie,jlie,IMKuben1337!,"OU=IM2,DC=drift,DC=hem"
