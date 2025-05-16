@@ -1,18 +1,9 @@
 # IT-tjenester i Windows Server-miljø - drift_termin
 
-Dette lageret inneholder dokumentasjon og potensielt skript relatert til oppsett og administrasjon av ulike IT-tjenester i et Windows Server-miljø. Det dekker konfigurasjon av essensielle tjenester som DHCP, Active Directory Domain Services (AD DS), VLAN, Hyper-V, IIS, Windows Deployment Services (WDS) og Microsoft Deployment Toolkit (MDT).
 
 Målet med denne dokumentasjonen er å gi en oversikt over de nødvendige komponentene og konfigurasjonstrinnene for hver tjeneste, med fokus på hva som kreves for å ha tjenesten på plass og funksjonell.
 
 ## Innholdsfortegnelse
-
-- [DHCP (Dynamic Host Configuration Protocol)](#dhcp-dynamic-host-configuration-protocol)
-- [Active Directory Domain Services (AD DS)](#active-directory-domain-services-ad-ds)
-- [VLAN-konfigurasjon](#vlan-konfigurasjon)
-- [Hyper-V Virtualisering](#hyper-v-virtualisering)
-- [IIS (Internet Information Services)](#iis-internet-information-services)
-- [Windows Deployment Services (WDS)](#windows-deployment-services-wds)
-- [Microsoft Deployment Toolkit (MDT)](#microsoft-deployment-toolkit-mdt)
 
 ## DHCP (Dynamic Host Configuration Protocol)
 
@@ -59,12 +50,24 @@ For å sette opp og konfigurere en domenekontroller med AD DS ved hjelp av Power
 
 ## VLAN-konfigurasjon
 
-Konfigurering av VLAN på en Windows Server innebærer vanligvis følgende for å ha det på plass:
+# OPNsense VLAN på Hyper-V
 
-* **Støtte for nettverkskort og svitsj:** Sørg for at nettverkskortet (NIC) og nettverkssvitsjen støtter IEEE 802.1q for VLAN-merking.
-* **VLAN ID-konfigurasjon:** Konfigurer den spesifikke VLAN ID-en på nettverkskortet eller NIC-team-grensesnittet. Dette kan ofte gjøres via nettverkskortets avanserte egenskaper i Enhetsbehandling eller innenfor NIC Teaming-konfigurasjonsgrensesnittet i Server Manager.
-* **IP-adresse tildeling:** Tilordne en IP-adresse og nettverksmaske til VLAN-grensesnittet som samsvarer med VLAN-nettverket.
-* **Svitsjkonfigurasjon:** Nettverkssvitsjportene som er koblet til serveren må konfigureres for å tillate de spesifiserte VLAN-ene.
+## Hyper-V
+- Lag ekstern vSwitch.
+- Aktiver "Enable virtual LAN" på nettverkskort, sett VLAN ID.
+
+## OPNsense
+- Installer med 2 NIC (WAN/LAN).
+- Legg til VLAN under `Interfaces > Other Types > VLAN`.
+- Assign til nytt grensesnitt, sett IP (f.eks. 192.168.10.1/24).
+
+## Brannmur
+- `Firewall > Rules > [VLAN]`: Tillat trafikk fra VLAN (source `192.168.10.0/24`, dest `any`).
+
+## Test
+- Koble VM til vSwitch med samme VLAN ID.
+- Ping OPNsense IP.
+
 
 ## Hyper-V Virtualisering
 
@@ -107,4 +110,3 @@ MDT brukes i forbindelse med WDS for å gi en mer automatisert og tilpassbar dis
 * **Befolke deployment share:** Importer operativsystembilder, drivere, applikasjoner og pakker til deployment share.
 * **Opprette oppgavesekvenser:** Definer oppgavesekvenser som automatiserer trinnene involvert i distribusjon av et operativsystem, inkludert installasjon av OS, drivere, applikasjoner og domenetilslutning.
 * **Integrere med WDS:** Konfigurer WDS til å bruke boot-bildene generert av MDT, slik at klientdatamaskiner kan starte opp i MDT-miljøet via PXE og starte distribusjonsprosessen.
-
