@@ -69,7 +69,7 @@ For å sette opp og konfigurere en domenekontroller med AD DS ved hjelp av Power
 - Ping OPNsense IP.
 
 
-## Hyper-V Virtualisering
+## Hyper-V Virtualisering for serveren
 
 For å ha Hyper-V virtualisering i et Windows Server-miljø, må du:
 
