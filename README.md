@@ -74,7 +74,7 @@ For å sette opp og konfigurere en domenekontroller med AD DS ved hjelp av Power
 For å ha Hyper-V virtualisering i et Windows Server-miljø, må du:
 
 * **Oppfylle forutsetninger:** Servermaskinvaren må støtte virtualisering og ha det aktivert i BIOS/UEFI. Operativsystemet må være en versjon av Windows Server som inkluderer Hyper-V-rollen.
-* **Installere Hyper-V-rollen:** Legg til Hyper-V-serverrollen via Server Manager eller ved hjelp av PowerShell (`Install-WindowsFeature -Name Hyper-V -IncludeAllSubFeature -Restart` for Server Core eller `Add-WindowsFeature rsat-Hyper-V-tools` for administrasjonsverktøy).
+* **Installere Hyper-V-rollen:** Legg til Hyper-V-serverrollen via Server Manager eller ved hjelp av PowerShell ( ```powershell Install-WindowsFeature -Name Hyper-V -IncludeAllSubFeature -Restart ``` for Server Core eller `Add-WindowsFeature rsat-Hyper-V-tools` for administrasjonsverktøy).
 * **Installere Hyper-V-administrasjonsverktøy (valgfritt):** Installer Hyper-V Manager-konsollen for å administrere virtuelle maskiner. Dette er vanligvis inkludert når rollen installeres, men kan installeres separat.
 * **Konfigurere virtuelle svitsjer:** Opprett virtuelle svitsjer for å koble virtuelle maskiner til det fysiske nettverket eller for å opprette isolerte interne nettverk. Dette er et viktig konfigurasjonstrinn etter installasjon av rollen.
 * **Opprette og konfigurere virtuelle maskiner:** Definer den virtuelle maskinens maskinvareressurser (CPU, minne, lagring, nettverk) og installer et operativsystem.
